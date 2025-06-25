@@ -1,0 +1,60 @@
+/* Smooth scroll for navigation */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Fade-in animation for sections */
+.fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+.fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Profile image styling */
+.profile-img {
+    max-width: 300px;
+    height: auto;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Project scroller */
+.project-scroller {
+    display: flex;
+    width: 100%;
+    overflow-x: hidden;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+}
+
+.project-scroller::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+}
+
+.project-card {
+    flex: 0 0 100%;
+    width: 100%;
+    scroll-snap-align: start;
+}
+
+@media (max-width: 768px) {
+    .project-card .description-container,
+    .project-card .title-container {
+        width: 100%;
+    }
+    .project-card {
+        flex-direction: column;
+    }
+}
+
+/* Poppins font for project titles */
+.font-poppins {
+    font-family: 'Poppins', sans-serif;
+}
