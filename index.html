@@ -1,236 +1,642 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manideep's Portfolio</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Manideep Reddy – Full-Stack Developer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --navy: #0a0e1a;
+      --navy2: #111827;
+      --card: #141c2e;
+      --card2: #1a2540;
+      --accent: #4f8ef7;
+      --accent2: #7c5cfc;
+      --teal: #1fd9c1;
+      --muted: #94a3b8;
+      --text: #e8edf5;
+      --border: rgba(255,255,255,0.07);
+      --grad: linear-gradient(135deg, #4f8ef7 0%, #7c5cfc 100%);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--navy);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    /* ── SCROLLBAR ── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--navy); }
+    ::-webkit-scrollbar-thumb { background: var(--accent2); border-radius: 3px; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; width: 100%; z-index: 100;
+      background: rgba(10,14,26,0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 5%;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 64px;
+    }
+    .nav-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800; font-size: 1.15rem;
+      background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      text-decoration: none; color: var(--muted); font-size: 0.88rem; font-weight: 500;
+      letter-spacing: 0.02em; transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+    .nav-cta {
+      background: var(--grad); color: #fff; padding: 0.45rem 1.2rem;
+      border-radius: 50px; font-size: 0.82rem; font-weight: 600;
+      text-decoration: none; transition: opacity 0.2s;
+    }
+    .nav-cta:hover { opacity: 0.85; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+    .hamburger span { width: 24px; height: 2px; background: var(--text); border-radius: 2px; transition: 0.3s; }
+
+    /* ── HERO ── */
+    #home {
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      padding: 100px 5% 60px;
+      position: relative; overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0; pointer-events: none;
+    }
+    .hero-bg::before {
+      content: '';
+      position: absolute;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(79,142,247,0.18) 0%, transparent 70%);
+      top: -100px; left: -100px; border-radius: 50%;
+    }
+    .hero-bg::after {
+      content: '';
+      position: absolute;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(124,92,252,0.15) 0%, transparent 70%);
+      bottom: -60px; right: -80px; border-radius: 50%;
+    }
+    .hero-inner {
+      max-width: 860px; text-align: center; position: relative; z-index: 1;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(79,142,247,0.12); border: 1px solid rgba(79,142,247,0.25);
+      color: var(--accent); padding: 0.4rem 1.1rem; border-radius: 50px;
+      font-size: 0.82rem; font-weight: 500; margin-bottom: 1.8rem;
+      animation: fadeUp 0.6s ease both;
+    }
+    .hero-badge-dot { width: 8px; height: 8px; background: var(--teal); border-radius: 50%; }
+    .hero-name {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800; font-size: clamp(2.4rem, 6vw, 4rem);
+      line-height: 1.1; margin-bottom: 1rem;
+      animation: fadeUp 0.7s 0.1s ease both;
+    }
+    .hero-name span {
+      background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .hero-sub {
+      font-size: clamp(1rem, 2.5vw, 1.2rem); color: var(--muted); font-weight: 300;
+      max-width: 580px; margin: 0 auto 0.8rem;
+      animation: fadeUp 0.7s 0.2s ease both;
+    }
+    .hero-summary {
+      font-size: 0.95rem; color: var(--muted); max-width: 560px; margin: 0 auto 2.4rem;
+      animation: fadeUp 0.7s 0.25s ease both;
+    }
+    .hero-btns {
+      display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+      animation: fadeUp 0.7s 0.35s ease both;
+    }
+    .btn-primary {
+      background: var(--grad); color: #fff; padding: 0.75rem 2rem;
+      border-radius: 50px; font-weight: 600; font-size: 0.92rem;
+      text-decoration: none; transition: opacity 0.2s, transform 0.2s;
+    }
+    .btn-primary:hover { opacity: 0.88; transform: translateY(-2px); }
+    .btn-outline {
+      border: 1px solid rgba(255,255,255,0.18); color: var(--text);
+      padding: 0.75rem 2rem; border-radius: 50px; font-weight: 500;
+      font-size: 0.92rem; text-decoration: none; transition: border-color 0.2s, transform 0.2s;
+    }
+    .btn-outline:hover { border-color: var(--accent); transform: translateY(-2px); }
+    .hero-stats {
+      display: flex; gap: 2.5rem; justify-content: center; flex-wrap: wrap;
+      margin-top: 3.5rem; animation: fadeUp 0.7s 0.45s ease both;
+    }
+    .hero-stat { text-align: center; }
+    .hero-stat-num {
+      font-family: 'Syne', sans-serif; font-weight: 800;
+      font-size: 1.8rem; color: var(--text);
+    }
+    .hero-stat-num span { background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .hero-stat-label { font-size: 0.78rem; color: var(--muted); margin-top: 2px; letter-spacing: 0.04em; }
+
+    /* ── SECTION COMMONS ── */
+    section { padding: 90px 5%; }
+    .section-tag {
+      display: inline-block; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 0.6rem;
+    }
+    .section-title {
+      font-family: 'Syne', sans-serif; font-weight: 700;
+      font-size: clamp(1.8rem, 4vw, 2.5rem); margin-bottom: 0.5rem;
+    }
+    .section-desc { color: var(--muted); max-width: 520px; font-size: 0.95rem; }
+    .container { max-width: 1100px; margin: 0 auto; }
+
+    /* ── ABOUT ── */
+    #about { background: var(--navy2); }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; margin-top: 3rem; }
+    .about-text p { color: var(--muted); margin-bottom: 1rem; font-size: 0.95rem; }
+    .about-text p strong { color: var(--text); }
+    .about-info-list { list-style: none; margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.7rem; }
+    .about-info-list li { display: flex; gap: 0.8rem; align-items: flex-start; font-size: 0.88rem; color: var(--muted); }
+    .about-info-list li strong { color: var(--accent); min-width: 70px; }
+    .about-right { display: flex; flex-direction: column; gap: 1.5rem; }
+    .edu-card {
+      background: var(--card); border: 1px solid var(--border); border-radius: 14px;
+      padding: 1.2rem 1.4rem;
+    }
+    .edu-card-year { font-size: 0.75rem; color: var(--accent); font-weight: 600; letter-spacing: 0.05em; margin-bottom: 0.3rem; }
+    .edu-card-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1rem; margin-bottom: 0.2rem; }
+    .edu-card-school { font-size: 0.85rem; color: var(--muted); }
+    .edu-card-score { font-size: 0.82rem; color: var(--teal); font-weight: 500; margin-top: 0.3rem; }
+
+    /* ── EXPERIENCE ── */
+    #experience { background: var(--navy); }
+    .exp-grid { margin-top: 3rem; display: flex; flex-direction: column; gap: 1.5rem; }
+    .exp-card {
+      background: var(--card); border: 1px solid var(--border); border-radius: 16px;
+      padding: 1.8rem 2rem; position: relative; overflow: hidden;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .exp-card:hover { border-color: rgba(79,142,247,0.35); transform: translateY(-2px); }
+    .exp-card::before {
+      content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+      width: 3px; background: var(--grad);
+    }
+    .exp-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; flex-wrap: wrap; margin-bottom: 1rem; }
+    .exp-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.05rem; }
+    .exp-company { font-size: 0.85rem; color: var(--accent); margin-top: 2px; }
+    .exp-date { font-size: 0.78rem; color: var(--muted); background: rgba(255,255,255,0.05); padding: 0.3rem 0.8rem; border-radius: 50px; white-space: nowrap; }
+    .exp-bullets { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+    .exp-bullets li { font-size: 0.88rem; color: var(--muted); padding-left: 1.2rem; position: relative; }
+    .exp-bullets li::before { content: '→'; position: absolute; left: 0; color: var(--teal); font-size: 0.8rem; }
+
+    /* ── PROJECTS ── */
+    #projects { background: var(--navy2); }
+    .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; margin-top: 3rem; }
+    .proj-card {
+      background: var(--card); border: 1px solid var(--border); border-radius: 16px;
+      padding: 1.6rem 1.8rem; display: flex; flex-direction: column; gap: 1rem;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .proj-card:hover { border-color: rgba(124,92,252,0.4); transform: translateY(-3px); }
+    .proj-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; }
+    .proj-icon {
+      width: 44px; height: 44px; border-radius: 12px;
+      background: rgba(79,142,247,0.12); display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem; flex-shrink: 0;
+    }
+    .proj-stack { font-size: 0.72rem; color: var(--accent2); background: rgba(124,92,252,0.12); padding: 0.25rem 0.7rem; border-radius: 50px; height: fit-content; }
+    .proj-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.05rem; }
+    .proj-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.65; flex-grow: 1; }
+    .proj-impact { font-size: 0.8rem; color: var(--teal); font-weight: 500; }
+    .proj-links { display: flex; gap: 0.8rem; flex-wrap: wrap; }
+    .proj-link {
+      font-size: 0.8rem; font-weight: 500; padding: 0.35rem 1rem; border-radius: 50px;
+      text-decoration: none; transition: opacity 0.2s;
+    }
+    .proj-link-primary { background: var(--grad); color: #fff; }
+    .proj-link-secondary { border: 1px solid var(--border); color: var(--muted); }
+    .proj-link:hover { opacity: 0.8; }
+
+    /* ── SKILLS ── */
+    #skills { background: var(--navy); }
+    .skills-groups { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; margin-top: 3rem; }
+    .skill-group {
+      background: var(--card); border: 1px solid var(--border); border-radius: 16px;
+      padding: 1.4rem 1.6rem;
+    }
+    .skill-group-title { font-size: 0.72rem; color: var(--accent); font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 1rem; }
+    .skill-chips { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .chip {
+      font-size: 0.8rem; padding: 0.3rem 0.8rem; border-radius: 50px;
+      border: 1px solid var(--border); color: var(--muted); font-weight: 500;
+      background: rgba(255,255,255,0.03);
+    }
+
+    /* ── CERTS ── */
+    #certificates { background: var(--navy2); }
+    .certs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.2rem; margin-top: 3rem; }
+    .cert-card {
+      background: var(--card); border: 1px solid var(--border); border-radius: 14px;
+      padding: 1.3rem 1.5rem; display: flex; flex-direction: column; gap: 0.6rem;
+      transition: border-color 0.2s;
+    }
+    .cert-card:hover { border-color: rgba(31,217,193,0.3); }
+    .cert-badge { font-size: 0.7rem; color: var(--teal); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; }
+    .cert-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.95rem; }
+    .cert-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.6; flex-grow: 1; }
+    .cert-link {
+      font-size: 0.78rem; color: var(--accent); text-decoration: none; font-weight: 500;
+      align-self: flex-start; margin-top: auto;
+    }
+    .cert-link:hover { text-decoration: underline; }
+    .achievement-banner {
+      margin-top: 2rem; background: linear-gradient(135deg, rgba(79,142,247,0.12), rgba(124,92,252,0.12));
+      border: 1px solid rgba(79,142,247,0.25); border-radius: 16px;
+      padding: 1.5rem 2rem; display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap;
+    }
+    .achievement-icon { font-size: 2rem; }
+    .achievement-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.05rem; margin-bottom: 0.2rem; }
+    .achievement-desc { font-size: 0.85rem; color: var(--muted); }
+
+    /* ── CONTACT ── */
+    #contact { background: var(--navy); }
+    .contact-inner { max-width: 640px; }
+    .contact-links { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 2.5rem; }
+    .contact-link {
+      display: flex; align-items: center; gap: 0.6rem;
+      background: var(--card); border: 1px solid var(--border); border-radius: 12px;
+      padding: 0.8rem 1.4rem; text-decoration: none; color: var(--text);
+      font-size: 0.88rem; font-weight: 500; transition: border-color 0.2s, transform 0.2s;
+    }
+    .contact-link:hover { border-color: var(--accent); transform: translateY(-2px); }
+    .contact-link-icon { font-size: 1rem; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--navy2); border-top: 1px solid var(--border);
+      padding: 1.5rem 5%; text-align: center; color: var(--muted); font-size: 0.82rem;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .reveal {
+      opacity: 0; transform: translateY(28px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* ── MOBILE NAV ── */
+    @media (max-width: 768px) {
+      .nav-links { display: none; flex-direction: column; position: absolute; top: 64px; left: 0; right: 0; background: rgba(10,14,26,0.97); padding: 1.5rem 5%; gap: 1.2rem; }
+      .nav-links.open { display: flex; }
+      .nav-cta { display: none; }
+      .hamburger { display: flex; }
+      .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .hero-stats { gap: 1.5rem; }
+    }
+  </style>
 </head>
-<body class="bg-gray-100 font-sans text-gray-800">
-    <!-- Hero Section with Integrated Navbar -->
-<section id="home" class="min-h-screen flex items-center justify-center text-white bg-cover bg-center relative" style="background-image: url('./images/background.png');">
-    <!-- Overlay Gradient -->
-    <div class="absolute inset-0 bg-gradient-to-br from-black via-gray-800 to-indigo-900 opacity-80"></div>
+<body>
 
-    <div class="container mx-auto px-6 relative z-10">
-        <!-- Navbar -->
-        <nav class="fixed w-full top-0 z-20">
-            <div class="container mx-auto px-6 py-4 flex justify-end items-center">
-                <p class="text-left font-bold text-white">Manideep's Portfolio</p>
-                <div class="flex-grow"></div>
-                <ul class="flex space-x-6 text-white">
-                    <li><a href="#home" class="hover:text-blue-300">Home</a></li>
-                    <li><a href="#about" class="hover:text-blue-300">About</a></li>
-                    <li><a href="#projects" class="hover:text-blue-300">Projects</a></li>
-                    <li><a href="#certificates" class="hover:text-blue-300">Certificates</a></li>
-                    <li><a href="#contact" class="hover:text-blue-300">Contact</a></li>
-                    <li><a href="/manideep.pdf" class="hover:text-blue-300" >Resume</a></li>
-                </ul>
-            </div>
-        </nav>
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">MR.</div>
+  <ul class="nav-links" id="nav-links">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#certificates">Certificates</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="/MANIDEEPREDDYPULLAIAHGARI.pdf" download class="nav-cta">Resume ↓</a>
+  <div class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
 
-        <!-- Hero Content -->
-        <div class="flex flex-col items-center justify-center text-center pt-20 fade-in">
-            <h1 class="text-5xl font-bold mb-4">Hi, I'm Pullaiahgari Manideep Reddy</h1>
-            <p class="text-xl mb-6">A passionate full-stack developer building innovative web applications</p>
-            <div class="flex space-x-4">
-                <a href="#projects" class="bg-white text-blue-600 px-6 py-3 rounded-full font-semibold hover:bg-gray-200">
-                    View My Work
-                </a>
-                <a href="/MANIDEEPREDDYPULLAIAHGARI.pdf" download class="bg-blue-600 text-white px-6 py-3 rounded-full font-semibold hover:bg-blue-700">
-                    Download Resume
-                </a>
-            </div>
-        </div>
+<!-- HERO -->
+<section id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-inner">
+    <div class="hero-badge"><div class="hero-badge-dot"></div> Available for opportunities</div>
+    <h1 class="hero-name">Pullaiahgari<br><span>Manideep Reddy</span></h1>
+    <p class="hero-sub">Full-Stack Developer &amp; AI/ML Graduate</p>
+    <p class="hero-summary">B.Tech (AIML) graduate building production-grade MERN stack applications that reduce manual workloads by 40–60% through automation and clean full-stack architecture.</p>
+    <div class="hero-btns">
+      <a href="#projects" class="btn-primary">View Projects</a>
+      <a href="/MANIDEEPREDDYPULLAIAHGARI.pdf" download class="btn-outline">Download Resume</a>
     </div>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="hero-stat-num"><span>3+</span></div>
+        <div class="hero-stat-label">Production Projects</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num"><span>60%</span></div>
+        <div class="hero-stat-label">Workload Reduced</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num"><span>8.70</span></div>
+        <div class="hero-stat-label">GPA / 10</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num"><span>5+</span></div>
+        <div class="hero-stat-label">Certifications</div>
+      </div>
+    </div>
+  </div>
 </section>
 
-
-    <!-- About Section -->
-    <section id="about" class="py-20 bg-white">
-        <div class="container mx-auto px-6 fade-in">
-            <h2 class="text-3xl font-bold text-center mb-8">About Me</h2>
-            <p class="text-lg text-center max-w-2xl mx-auto mb-6">
-                I'm a web developer with experience in building dynamic applications using JavaScript, React, Express, and more. My projects include a Student Results website, a Question Paper Generator. I specialize in both front-end and back-end development, with a focus on creating user-friendly, efficient, and scalable solutions.
-            </p>
-            <div class="flex flex-wrap justify-center gap-4">
-                <span class="bg-blue-100 text-blue-800 px-4 py-2 rounded-full">JavaScript</span>
-                <span class="bg-blue-100 text-blue-800 px-4 py-2 rounded-full">React</span>
-                <span class="bg-blue-100 text-blue-800 px-4 py-2 rounded-full">Node.js</span>
-                <span class="bg-blue-100 text-blue-800 px-4 py-2 rounded-full">Express</span>
-                <span class="bg-blue-100 text-blue-800 px-4 py-2 rounded-full">MongoDB</span>
-            </div>
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="reveal">
+      <span class="section-tag">About Me</span>
+      <h2 class="section-title">Who I Am</h2>
+    </div>
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <p>I'm a <strong>B.Tech CSE (AIML) graduate from Gurunanak Institutions Technical Campus</strong>, Hyderabad, graduating in 2026 with a GPA of 8.70/10. I specialise in full-stack web development using the MERN stack.</p>
+        <p>I've built and deployed multiple <strong>production-level systems</strong> that are actively used at my college — from academic result portals to automated question paper generators — proving that clean architecture and thoughtful UX create real-world impact.</p>
+        <p>My background in <strong>AI &amp; Machine Learning</strong> gives me an analytical edge when designing systems. I'm passionate about automating repetitive workflows and delivering scalable, maintainable code.</p>
+        <ul class="about-info-list">
+          <li><strong>Location</strong> Hyderabad, India</li>
+          <li><strong>Degree</strong> B.Tech CSE – AIML (2022–2026)</li>
+          <li><strong>Email</strong> manideep8491@gmail.com</li>
+          <li><strong>Phone</strong> +91-8500448491</li>
+        </ul>
+      </div>
+      <div class="about-right reveal">
+        <div class="edu-card">
+          <div class="edu-card-year">2022 – 2026</div>
+          <div class="edu-card-title">B.Tech – CSE (AIML)</div>
+          <div class="edu-card-school">Gurunanak Institutions Technical Campus</div>
+          <div class="edu-card-score">GPA: 8.70 / 10.0</div>
         </div>
-    </section>
-
-    <!-- Projects Section -->
-<section id="projects" class="py-20 bg-gray-100">
-  <div class="container mx-auto px-6 fade-in">
-    <h2 class="text-3xl font-bold text-center mb-8">My Projects</h2>
-
-    <!-- Vertical Project Cards -->
-    <div class="project-scroller flex flex-col gap-8">
-
-      <!-- Project 1 -->
-      <div class="project-card flex flex-col lg:flex-row bg-white rounded-lg shadow-lg overflow-hidden">
-        <div class="description-container lg:w-2/3 w-full p-6">
-          <p class="text-gray-600">
-            Student Results Web Application is a dynamic web-based platform designed to simplify the process of publishing and accessing student academic results. It allows administrators or faculty to upload and manage student data efficiently, while students can view their results using roll numbers.This project has been successfully implemented and actively used in our college, demonstrating its practical utility and effectiveness in a real academic environment.
-          </p>
+        <div class="edu-card">
+          <div class="edu-card-year">2020 – 2022</div>
+          <div class="edu-card-title">Intermediate – MPC</div>
+          <div class="edu-card-school">Sri Chaitanya Junior College</div>
+          <div class="edu-card-score">Score: 94%</div>
         </div>
-        <div class="title-container lg:w-1/3 w-full p-6 bg-blue-50 flex flex-col justify-between">
-          <h3 class="text-xl font-poppins font-bold text-gray-800 mb-4">Student Results Website</h3>
-          <div class="flex flex-col space-y-2">
-            <a href="https://gnitcresults.netlify.app/" class="bg-blue-600 text-white px-4 py-2 rounded-full text-center hover:bg-blue-700">Live Demo</a>
-            <a href="https://github.com/manideep9243/resultswebsite.git" class="bg-gray-600 text-white px-4 py-2 rounded-full text-center hover:bg-gray-700">Source Code</a>
+        <div class="edu-card">
+          <div class="edu-card-year">2019 – 2020</div>
+          <div class="edu-card-title">SSC</div>
+          <div class="edu-card-school">Siddartha High School</div>
+          <div class="edu-card-score">Score: 98% (10/10)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="container">
+    <div class="reveal">
+      <span class="section-tag">Experience</span>
+      <h2 class="section-title">Work History</h2>
+      <p class="section-desc">Hands-on internship experience building real-world full-stack applications.</p>
+    </div>
+    <div class="exp-grid">
+      <div class="exp-card reveal">
+        <div class="exp-top">
+          <div>
+            <div class="exp-title">MERN Stack Developer Intern</div>
+            <div class="exp-company">EduNet Foundation · in partnership with EY GDS</div>
           </div>
+          <span class="exp-date">Feb 2025 – Mar 2025</span>
+        </div>
+        <ul class="exp-bullets">
+          <li>Engineered a full-stack recipe-sharing platform using the MERN stack; built a responsive React UI, RESTful Express APIs, and a MongoDB schema with comprehensive validation.</li>
+          <li>Delivered seamless client-server data flow with efficient querying and structured backend architecture within a one-month timeline.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="container">
+    <div class="reveal">
+      <span class="section-tag">Projects</span>
+      <h2 class="section-title">What I've Built</h2>
+      <p class="section-desc">Production-level systems actively used in real academic environments.</p>
+    </div>
+    <div class="projects-grid">
+
+      <div class="proj-card reveal">
+        <div class="proj-top">
+          <div class="proj-icon">🎓</div>
+          <span class="proj-stack">MERN Stack</span>
+        </div>
+        <div class="proj-title">Online Evaluation Portal</div>
+        <div class="proj-desc">Full-stack academic evaluation system managing assignment submission, grading, and performance tracking with MongoDB validation and data integrity checks. Successfully deployed and actively used during the AI Summit at the college.</div>
+        <div class="proj-impact">✦ Used during AI Summit at GNITC</div>
+        <div class="proj-links">
+          <a href="#" class="proj-link proj-link-secondary">Source Code</a>
         </div>
       </div>
 
-      <!-- Project 2 -->
-      <div class="project-card flex flex-col lg:flex-row bg-white rounded-lg shadow-lg overflow-hidden">
-        <div class="description-container lg:w-2/3 w-full p-6">
-          <p class="text-gray-600">
-            The Question Paper Generator is a web-based system designed to automate the creation of question papers based on predefined criteria. It ensures efficient and balanced selection of questions while maintaining diversity in difficulty levels and topics. The system streamlines the paper-setting process for educators, saving time and reducing manual effort, while ensuring quality and variety in assessments.This project has been successfully implemented and actively used in our college, demonstrating its practical utility and effectiveness in a real academic environment.
-          </p>
+      <div class="proj-card reveal">
+        <div class="proj-top">
+          <div class="proj-icon">📄</div>
+          <span class="proj-stack">Python / Rule-Based</span>
         </div>
-        <div class="title-container lg:w-1/3 w-full p-6 bg-blue-50 flex flex-col justify-between">
-          <h3 class="text-xl font-poppins font-bold text-gray-800 mb-4">Question Paper Generator</h3>
-          <div class="flex flex-col space-y-2">
-            <a href="https://descriptivequestionpapergenerator.netlify.app/" class="bg-blue-600 text-white px-4 py-2 rounded-full text-center hover:bg-blue-700">Live Demo</a>
-            <a href="https://github.com/manideep9243/QPGENRATOR.git" class="bg-gray-600 text-white px-4 py-2 rounded-full text-center hover:bg-gray-700">Source Code</a>
-          </div>
+        <div class="proj-title">Question Paper Generator</div>
+        <div class="proj-desc">Automated structured question paper generation from validated datasets with reconciliation logic to eliminate duplication. Actively used by faculty for official paper creation at GNITC.</div>
+        <div class="proj-impact">✦ Reduced manual exam-prep workload by 60%</div>
+        <div class="proj-links">
+          <a href="https://descriptivequestionpapergenerator.netlify.app/" class="proj-link proj-link-primary" target="_blank">Live Demo</a>
+          <a href="https://github.com/manideep9243/QPGENRATOR.git" class="proj-link proj-link-secondary" target="_blank">Source Code</a>
+        </div>
+      </div>
+
+      <div class="proj-card reveal">
+        <div class="proj-top">
+          <div class="proj-icon">📊</div>
+          <span class="proj-stack">MERN Stack</span>
+        </div>
+        <div class="proj-title">Student Results Portal</div>
+        <div class="proj-desc">Secure platform for publishing academic results with role-based access controls and data integrity mechanisms. Tested and used across official result release cycles at the college.</div>
+        <div class="proj-impact">✦ Reduced faculty admin workload by 40%</div>
+        <div class="proj-links">
+          <a href="https://gnitcresults.netlify.app/" class="proj-link proj-link-primary" target="_blank">Live Demo</a>
+          <a href="https://github.com/manideep9243/resultswebsite.git" class="proj-link proj-link-secondary" target="_blank">Source Code</a>
         </div>
       </div>
 
     </div>
   </div>
 </section>
-<!-- Technical Skills Section -->
-    <section id="skills" class="py-20 bg-white">
-        <div class="container mx-auto px-6 fade-in">
-            <h2 class="text-3xl font-bold text-center mb-8">Technical Skills</h2>
-            <div class="flex flex-wrap justify-center gap-4">
-                <span class="bg-blue-100 text-blue-800 px-4 py-2 rounded-full">HTML</span>
-                <span class="bg-blue-100 text-blue-800 px-4 py-2 rounded-full">CSS</span>
-                <span class="bg-blue-100 text-blue-800 px-4 py-2 rounded-full">JavaScript</span>
-                <span class="bg-blue-100 text-blue-800 px-4 py-2 rounded-full">React</span>
-                <span class="bg-blue-100 text-blue-800 px-4 py-2 rounded-full">Node.js</span>
-                <span class="bg-blue-100 text-blue-800 px-4 py-2 rounded-full">Express</span>
-                <span class="bg-blue-100 text-blue-800 px-4 py-2 rounded-full">MongoDB</span>
-                <span class="bg-blue-100 text-blue-800 px-4 py-2 rounded-full">Git</span>
-                
-            </div>
-        </div>
-    </section>
- <!-- Certificate Section -->
-<section id="projects" class="py-20 bg-gray-100">
-  <div class="container mx-auto px-6 fade-in">
-    <h2 class="text-3xl font-bold text-center mb-8">My Certificates</h2>
 
-    <!-- Vertical Certificate Cards -->
-    <div class="project-scroller flex flex-col gap-8">
-
-      <!-- Certificate 1 -->
-      <div class="project-card flex flex-col lg:flex-row bg-white rounded-lg shadow-lg overflow-hidden">
-        <div class="description-container lg:w-2/3 w-full p-6">
-          <p class="text-gray-600">
-            I successfully completed a hands-on internship with Edunet Foundation, where I worked on real-world projects aimed at enhancing my technical and professional skills. During this internship, I gained practical experience in areas such as web development, programming fundamentals, and project-based learning, while collaborating with mentors and peers in a structured environment.
-          </p>
-        </div>
-        <div class="title-container lg:w-1/3 w-full p-6 bg-blue-50 flex flex-col justify-between">
-          <h3 class="text-xl font-poppins font-bold text-gray-800 mb-4">Recipe sharing Platform</h3>
-          <div class="flex flex-col space-y-2">
-            <a href="https://drive.google.com/file/d/1fiat-eEC0crV9rmJLUBWmWYIGlaEp-VO/view?usp=sharing" class="bg-blue-600 text-white px-4 py-2 rounded-full text-center hover:bg-blue-700">View Certificate</a>
-          </div>
+<!-- SKILLS -->
+<section id="skills">
+  <div class="container">
+    <div class="reveal">
+      <span class="section-tag">Skills</span>
+      <h2 class="section-title">Technical Stack</h2>
+    </div>
+    <div class="skills-groups">
+      <div class="skill-group reveal">
+        <div class="skill-group-title">Languages</div>
+        <div class="skill-chips">
+          <span class="chip">JavaScript (ES6+)</span>
+          <span class="chip">Java</span>
+          <span class="chip">SQL</span>
+          <span class="chip">Python</span>
         </div>
       </div>
-
-      <!-- Certificate 2 -->
-      <div class="project-card flex flex-col lg:flex-row bg-white rounded-lg shadow-lg overflow-hidden">
-        <div class="description-container lg:w-2/3 w-full p-6">
-          <p class="text-gray-600">
-            Successfully completed the NPTEL (National Programme on Technology Enhanced Learning) online course on "Programming in Java", offered by the Indian Institute of Technology (IIT).This course provided in-depth knowledge of Java programming concepts and object-oriented programming principles, with hands-on assignments and weekly evaluations.
-          </p>
-        </div>
-        <div class="title-container lg:w-1/3 w-full p-6 bg-blue-50 flex flex-col justify-between">
-          <h3 class="text-xl font-poppins font-bold text-gray-800 mb-4">Programming in Java</h3>
-          <div class="flex flex-col space-y-2">
-            <a href="https://drive.google.com/file/d/1QNleuVhNH6dZVBLwlkFASPUMyapasKz_/view?usp=sharing" class="bg-blue-600 text-white px-4 py-2 rounded-full text-center hover:bg-blue-700">View Certificate</a>
-            </div>
+      <div class="skill-group reveal">
+        <div class="skill-group-title">Frameworks</div>
+        <div class="skill-chips">
+          <span class="chip">React.js</span>
+          <span class="chip">Node.js</span>
+          <span class="chip">Express.js</span>
         </div>
       </div>
-
-      <!-- Certificate 3 -->
-      <div class="project-card flex flex-col lg:flex-row bg-white rounded-lg shadow-lg overflow-hidden">
-        <div class="description-container lg:w-2/3 w-full p-6">
-          <p class="text-gray-600">
-          Received a Special Achievement Award for developing a Question Paper Generator Web Application that significantly streamlined the examination paper creation process for faculty and institutions. Recognized by faculty and academic authorities for innovation, practical utility, and technical execution. This achievement reflects both my technical proficiency and my ability to solve real-world academic challenges through software solutions.
-          </p>
+      <div class="skill-group reveal">
+        <div class="skill-group-title">Databases</div>
+        <div class="skill-chips">
+          <span class="chip">MongoDB</span>
+          <span class="chip">MySQL</span>
         </div>
-        <div class="title-container lg:w-1/3 w-full p-6 bg-blue-50 flex flex-col justify-between">
-          <h3 class="text-xl font-poppins font-bold text-gray-800 mb-4">Special Achievement Award</h3>
-          <div class="flex flex-col space-y-2">
-            <a href="https://drive.google.com/file/d/189vlrsyTLEZ61tHK7qqg5sOcNSqsNU1W/view?usp=sharing" class="bg-blue-600 text-white px-4 py-2 rounded-full text-center hover:bg-blue-700">View Certificate</a>
-          </div>
+      </div>
+      <div class="skill-group reveal">
+        <div class="skill-group-title">Tools & Platforms</div>
+        <div class="skill-chips">
+          <span class="chip">Git</span>
+          <span class="chip">GitHub Copilot</span>
+          <span class="chip">VS Code</span>
+          <span class="chip">AWS</span>
+          <span class="chip">Claude Code</span>
+          <span class="chip">Cursor</span>
+          <span class="chip">Windsurf</span>
+        </div>
+      </div>
+      <div class="skill-group reveal">
+        <div class="skill-group-title">Competencies</div>
+        <div class="skill-chips">
+          <span class="chip">RESTful API Design</span>
+          <span class="chip">Data Validation</span>
+          <span class="chip">Workflow Automation</span>
+          <span class="chip">MERN Stack</span>
         </div>
       </div>
     </div>
+  </div>
 </section>
 
-    <!-- Contact Section -->
-    <section id="contact" class="py-20 bg-gray-100">
-        <div class="container mx-auto px-6 fade-in">
-            <h2 class="text-3xl font-bold text-center mb-8">Get in Touch</h2>
-            <p class="text-lg text-center max-w-2xl mx-auto mb-6">
-                Interested in collaborating or have a question? Reach out via email, phone, or connect with me on social platforms.
-            </p>
-            <div class="flex justify-center gap-6 flex-wrap">
-                <a href="manideep8491@gmail.com" class="text-blue-600 hover:underline">Email</a>
-                <a href="tel:+91 8500448491" class="text-blue-600 hover:underline">Phone</a>
-                <a href="https://github.com/manideep9243" class="text-blue-600 hover:underline">GitHub</a>
-                <a href="https://www.linkedin.com/in/manideepreddypullaiahgari" class="text-blue-600 hover:underline">LinkedIn</a>
-            </div>
-        </div>
-    </section>
+<!-- CERTIFICATES -->
+<section id="certificates">
+  <div class="container">
+    <div class="reveal">
+      <span class="section-tag">Certificates & Awards</span>
+      <h2 class="section-title">Recognition</h2>
+      <p class="section-desc">Verified credentials and academic achievements.</p>
+    </div>
 
-    <!-- Footer -->
-    <footer class="bg-gray-800 text-white py-6">
-        <div class="container mx-auto px-6 text-center">
-            <p>© 2025 Pullaiahgari Manideep Reddy. All rights reserved.</p>
-        </div>
-    </footer>
+    <div class="achievement-banner reveal">
+      <div class="achievement-icon">🏆</div>
+      <div>
+        <div class="achievement-title">Best Outgoing Student of the Year – GNITC (2026)</div>
+        <div class="achievement-desc">Recognised as the best outgoing student of the graduating class of 2026 at Gurunanak Institutions Technical Campus.</div>
+      </div>
+    </div>
 
-    <script>
-        // Fade-in animation on scroll
-        const sections = document.querySelectorAll('.fade-in');
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, { threshold: 0.1 });
+    <div class="certs-grid" style="margin-top: 2rem;">
+      <div class="cert-card reveal">
+        <div class="cert-badge">AWS · 2025</div>
+        <div class="cert-title">AWS Cloud Practitioner Essentials</div>
+        <div class="cert-desc">Foundational cloud concepts, core AWS services, security, architecture, pricing, and support on the Amazon Web Services platform.</div>
+      </div>
+      <div class="cert-card reveal">
+        <div class="cert-badge">PMKVY · 2025</div>
+        <div class="cert-title">Senior Software Developer – PMKVY</div>
+        <div class="cert-desc">National skill certification recognising competency as a senior software developer under the Pradhan Mantri Kaushal Vikas Yojana framework.</div>
+      </div>
+      <div class="cert-card reveal">
+        <div class="cert-badge">NPTEL · 2024</div>
+        <div class="cert-title">Programming in Java – NPTEL (IIT)</div>
+        <div class="cert-desc">Completed the IIT-delivered NPTEL course on Java programming, covering OOP principles, data structures, and hands-on assignments.</div>
+        <a href="https://drive.google.com/file/d/1QNleuVhNH6dZVBLwlkFASPUMyapasKz_/view?usp=sharing" class="cert-link" target="_blank">View Certificate →</a>
+      </div>
+      <div class="cert-card reveal">
+        <div class="cert-badge">EduNet Foundation · 2025</div>
+        <div class="cert-title">MERN Stack Internship – Recipe Platform</div>
+        <div class="cert-desc">Completed an industry-aligned internship with EduNet Foundation (EY GDS) building a full-stack recipe-sharing platform from scratch.</div>
+        <a href="https://drive.google.com/file/d/1fiat-eEC0crV9rmJLUBWmWYIGlaEp-VO/view?usp=sharing" class="cert-link" target="_blank">View Certificate →</a>
+      </div>
+      <div class="cert-card reveal">
+        <div class="cert-badge">GNITC · 2025</div>
+        <div class="cert-title">Special Achievement Award</div>
+        <div class="cert-desc">Awarded for developing the Question Paper Generator Web Application that significantly streamlined examination paper creation for faculty and institutions.</div>
+        <a href="https://drive.google.com/file/d/189vlrsyTLEZ61tHK7qqg5sOcNSqsNU1W/view?usp=sharing" class="cert-link" target="_blank">View Certificate →</a>
+      </div>
+    </div>
+  </div>
+</section>
 
-        sections.forEach(section => observer.observe(section));
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="contact-inner">
+      <div class="reveal">
+        <span class="section-tag">Contact</span>
+        <h2 class="section-title">Let's Connect</h2>
+        <p class="section-desc">Open to full-time roles, freelance projects, and interesting collaborations. Feel free to reach out through any channel below.</p>
+      </div>
+      <div class="contact-links reveal">
+        <a href="mailto:manideep8491@gmail.com" class="contact-link">
+          <span class="contact-link-icon">✉</span> manideep8491@gmail.com
+        </a>
+        <a href="tel:+918500448491" class="contact-link">
+          <span class="contact-link-icon">📞</span> +91 8500448491
+        </a>
+        <a href="https://github.com/manideep9243" class="contact-link" target="_blank">
+          <span class="contact-link-icon">⌨</span> GitHub
+        </a>
+        <a href="https://www.linkedin.com/in/manideepreddypullaiahgari" class="contact-link" target="_blank">
+          <span class="contact-link-icon">💼</span> LinkedIn
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
 
-        // Project scroller navigation
-        const scroller = document.querySelector('.project-scroller');
-        const prevButton = document.getElementById('prev-project');
-        const nextButton = document.getElementById('next-project');
-        const cardWidth = document.querySelector('.project-card').offsetWidth + 32; 
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 Pullaiahgari Manideep Reddy. All rights reserved. · Hyderabad, India</p>
+</footer>
 
-        nextButton.addEventListener('click', () => {
-            scroller.scrollBy({ left: cardWidth, behavior: 'smooth' });
-        });
+<script>
+  const hamburger = document.getElementById('hamburger');
+  const navLinks = document.getElementById('nav-links');
+  hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
 
-        prevButton.addEventListener('click', () => {
-            scroller.scrollBy({ left: -cardWidth, behavior: 'smooth' });
-        });
-    
-    </script>
+  const reveals = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => io.observe(el));
+
+  document.querySelectorAll('nav a[href^="#"]').forEach(a => {
+    a.addEventListener('click', () => navLinks.classList.remove('open'));
+  });
+</script>
 </body>
 </html>
-
